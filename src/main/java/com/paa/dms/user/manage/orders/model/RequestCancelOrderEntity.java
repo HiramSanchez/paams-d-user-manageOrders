@@ -9,6 +9,5 @@ import lombok.Data;
 public class RequestCancelOrderEntity {
     @NotBlank(message = "is mandatory")
     @Positive(message = "must be a positive number")
-    @Pattern(regexp = "^\\d{14}$", message="must be a 16 digit number")
     private String orderID;
 }
