@@ -5,6 +5,7 @@ import com.paa.dms.user.manage.orders.model.RequestCancelOrderEntity;
 import com.paa.dms.user.manage.orders.model.RequestNewOrderEntity;
 import com.paa.dms.user.manage.orders.model.ResponseRetrieveOrderEntity;
 import com.paa.dms.user.manage.orders.service.UserManageOrdersService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +20,7 @@ public class UserManageOrdersController {
     private UserManageOrdersService userManageOrderService;
 
     @PostMapping(path = APIConstants.CREATE_NEW_ORDER_ENDPOINT)
-    public ResponseEntity<String> createOrder(@RequestHeader HttpHeaders httpHeaders, @RequestBody RequestNewOrderEntity userRequest) {
+    public ResponseEntity<String> createOrder(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody RequestNewOrderEntity userRequest) {
         log.debug(APIConstants.LOG_NEW_ORDER_ENDPOINT);
         return userManageOrderService.saveOrder(httpHeaders,userRequest);
     }
@@ -31,13 +32,13 @@ public class UserManageOrdersController {
     }
 
     @PutMapping(path = APIConstants.CANCEL_USER_ORDER_ENDPOINT)
-    public ResponseEntity<String> cancelOrder(@RequestBody RequestCancelOrderEntity userRequest,@RequestHeader HttpHeaders httpHeaders) {
+    public ResponseEntity<String> cancelOrder(@RequestBody RequestCancelOrderEntity userRequest, @Valid @RequestHeader HttpHeaders httpHeaders) {
         log.debug(APIConstants.LOG_CANCEL_ORDER_ENDPOINT);
         return userManageOrderService.cancelOrder(userRequest,httpHeaders);
     }
 
     @DeleteMapping(path = APIConstants.DELETE_USER_ORDER_ENDPOINT)
-    public ResponseEntity<String> deleteOrder(@RequestBody RequestCancelOrderEntity userRequest,@RequestHeader HttpHeaders httpHeaders) {
+    public ResponseEntity<String> deleteOrder(@RequestBody RequestCancelOrderEntity userRequest, @Valid @RequestHeader HttpHeaders httpHeaders) {
         log.debug(APIConstants.LOG_DELETE_ORDER_ENDPOINT);
         return userManageOrderService.deleteOrder(userRequest,httpHeaders);
     }
