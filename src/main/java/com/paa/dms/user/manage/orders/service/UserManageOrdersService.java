@@ -96,11 +96,10 @@ public class UserManageOrdersService {
 
         String uid = httpHeaders.getFirst("uid").toString();
         log.debug("REQUEST >>> " + uid + " requested to cancel order number #" + userRequest.getOrderID());
-
         MongoOrdersEntity storedOrderData = findOrderByOrderId(userRequest.getOrderID()).orElseThrow(() -> new NoDataFoundException());
         String status = storedOrderData.getOrderStatus().toString();
         if ((status.equals(apiConstants.getSTATUS_ORDER_PLACED()))&&(uid.equals(storedOrderData.getUid()))) {
-            storedOrderData.setOrderStatus("Canceled");
+            storedOrderData.setOrderStatus("canceled");
             usersOrdersRepository.save(storedOrderData);
             ResponseEntity response = ResponseEntity.ok("Order was canceled successfully");
             log.debug("RESPONSE >>> " + response);

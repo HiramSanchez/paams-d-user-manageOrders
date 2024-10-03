@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class RequestCancelOrderEntity {
     /** Unique identifier for the order. */
-    @NotBlank(message = "is mandatory")
-    @Positive(message = "must be a positive number")
+    @NotBlank(message = " is mandatory")
+    @Positive(message = " must be a positive number")
     private String orderID;
 }
