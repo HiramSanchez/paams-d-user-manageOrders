@@ -9,10 +9,10 @@ import java.util.List;
 @Data
 public class RequestNewOrderEntity {
     /** List of products included in the order. */
-    @NotEmpty(message = "is mandatory")
+    @NotEmpty(message = " is mandatory")
     private List<ProductEntity> orderList;
     /** Total cost of the order. */
-    @NotBlank(message = "is mandatory")
-    @Positive(message = "must be a positive number")
+    @NotBlank(message = " is mandatory")
+    @Positive(message = " must be a positive number")
     private String orderTotal;
 }
