@@ -10,7 +10,6 @@ import com.paa.dms.user.manage.orders.util.UtilTools;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +23,16 @@ public class UserManageOrdersService {
     private MarketplaceProductsRepository marketplaceProductsRepository;
     @Autowired
     private UsersOrdersRepository usersOrdersRepository;
-
     @Autowired
     private UtilTools utilTools;
 
-    ////////////////////////////
-    //  Create Order Service  //
-    ////////////////////////////
+    /**
+     * Create Order Service
+     * Creates a new order for the user and saves it to the database.
+     * @param httpHeaders HTTP headers to retrieve the user identifier (uid)
+     * @param userRequest the order details from the user's request
+     * @return ResponseEntity confirming that the order was created
+     */
     public ResponseEntity<String> saveOrder(HttpHeaders httpHeaders, RequestNewOrderEntity userRequest) {
         log.debug("REQUEST >>> " + userRequest.toString());
         String uid = httpHeaders.getFirst("uid").toString();
@@ -51,10 +53,12 @@ public class UserManageOrdersService {
         return response;
     }
 
-
-    ////////////////////////////
-    //   Read Order Service   //
-    ////////////////////////////
+    /**
+     * Read Order Service
+     * Retrieves all orders for the user based on their uid.
+     * @param httpHeaders HTTP headers to retrieve the user identifier (uid)
+     * @return ResponseEntity containing a list of the user's orders
+     */
     public ResponseEntity<ResponseRetrieveOrderEntity> findUserOrders(HttpHeaders httpHeaders) {
 
         String uid = httpHeaders.getFirst("uid").toString();
@@ -71,14 +75,22 @@ public class UserManageOrdersService {
         throw new NoDataFoundException();
     }
 
+    /**
+     * Finds orders by the user's uid from the repository.
+     * @param uid the user's identifier
+     * @return List of orders associated with the uid
+     */
     public List<OrderEntity> findUserOrdersByUid(String uid) {
         return usersOrdersRepository.findOrderByUid(uid);
     }
 
-
-    ////////////////////////////
-    //  Cancel Order Service  //
-    ////////////////////////////
+     /**
+     * Cancel Order Service
+     * Cancels an order if the user is authorized and the order status is "placed".
+     * @param userRequest details of the order to cancel
+     * @param httpHeaders HTTP headers to retrieve the user identifier (uid)
+     * @return ResponseEntity confirming the order cancellation
+     */
     public ResponseEntity<String> cancelOrder(RequestCancelOrderEntity userRequest, HttpHeaders httpHeaders) {
 
         String uid = httpHeaders.getFirst("uid").toString();
@@ -97,10 +109,13 @@ public class UserManageOrdersService {
         }
     }
 
-
-    ////////////////////////////
-    //  Delete Order Service  //
-    ////////////////////////////
+    /**
+     * Delete Order Service
+     * Deletes an order if the user is authorized.
+     * @param userRequest details of the order to delete
+     * @param httpHeaders HTTP headers to retrieve the user identifier (uid)
+     * @return ResponseEntity confirming the order deletion
+     */
     public ResponseEntity<String> deleteOrder(RequestCancelOrderEntity userRequest, HttpHeaders httpHeaders) {
 
         String uid = httpHeaders.getFirst("uid").toString();
@@ -117,6 +132,11 @@ public class UserManageOrdersService {
         }
     }
 
+    /**
+     * Finds an order by its ID from the repository.
+     * @param orderID the order identifier
+     * @return Optional containing the order data if found
+     */
     public Optional<MongoOrdersEntity> findOrderByOrderId(String orderID) {
         return usersOrdersRepository.findOrderByOrderId(orderID);
     }
