@@ -25,6 +25,8 @@ public class UserManageOrdersService {
     private UsersOrdersRepository usersOrdersRepository;
     @Autowired
     private UtilTools utilTools;
+    @Autowired
+    private APIConstants apiConstants;
 
     /**
      * Create Order Service
@@ -42,14 +44,13 @@ public class UserManageOrdersService {
         userOrder.setGuideNumber("");
         userOrder.setOrderTotal(userRequest.getOrderTotal());
         userOrder.setOrderList(userRequest.getOrderList());
-        userOrder.setOrderStatus(APIConstants.STATUS_ORDER_PLACED);
+        userOrder.setOrderStatus(apiConstants.getSTATUS_ORDER_PLACED());
         userOrder.setOrderDate(utilTools.getDateFormatted());
         userOrder.setOrderID(utilTools.getOrderId());
 
         usersOrdersRepository.save(userOrder);
         ResponseEntity response = ResponseEntity.ok("Order Created");
-        log.debug("Order Created");
-        log.debug(APIConstants.RESPONSE_STRING_HTTP_EMPTY + response.getStatusCode());
+        log.debug("RESPONSE >>> " + response);
         return response;
     }
 
@@ -98,11 +99,11 @@ public class UserManageOrdersService {
 
         MongoOrdersEntity storedOrderData = findOrderByOrderId(userRequest.getOrderID()).orElseThrow(() -> new NoDataFoundException());
         String status = storedOrderData.getOrderStatus().toString();
-        if ((status.equals(APIConstants.STATUS_ORDER_PLACED))&&(uid.equals(storedOrderData.getUid()))) {
+        if ((status.equals(apiConstants.getSTATUS_ORDER_PLACED()))&&(uid.equals(storedOrderData.getUid()))) {
             storedOrderData.setOrderStatus("Canceled");
             usersOrdersRepository.save(storedOrderData);
             ResponseEntity response = ResponseEntity.ok("Order was canceled successfully");
-            log.debug(APIConstants.RESPONSE_STRING_HTTP_EMPTY + response.getStatusCode());
+            log.debug("RESPONSE >>> " + response);
             return response;
         }else{
             throw new ForbiddenException();
@@ -125,7 +126,7 @@ public class UserManageOrdersService {
         if (uid.equals(storedOrderData.getUid())) {
             usersOrdersRepository.deleteById(storedOrderData.get_id().toString());
             ResponseEntity response = ResponseEntity.ok("Order deleted successfully");
-            log.debug(APIConstants.RESPONSE_STRING_HTTP_EMPTY + response.getStatusCode());
+            log.debug("RESPONSE >>> " + response);
             return response;
         }else{
             throw new ForbiddenException();
