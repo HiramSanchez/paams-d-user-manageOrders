@@ -30,7 +30,8 @@ public class UserManageOrdersController {
      * @return ResponseEntity with status 200 OK when the order is successfully created
      */
     @PostMapping(path = APIConstants.CREATE_NEW_ORDER_ENDPOINT)
-    public ResponseEntity<String> createOrder(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody RequestNewOrderEntity userRequest) {
+    public ResponseEntity<String> createOrder(@RequestHeader HttpHeaders httpHeaders,
+                                              @Valid @RequestBody RequestNewOrderEntity userRequest) {
         log.debug(apiConstants.getLOG_NEW_ORDER_ENDPOINT());
         return userManageOrderService.saveOrder(httpHeaders,userRequest);
     }
@@ -55,7 +56,8 @@ public class UserManageOrdersController {
      * @return ResponseEntity with status 200 OK upon successful cancellation
      */
     @PutMapping(path = APIConstants.CANCEL_USER_ORDER_ENDPOINT)
-    public ResponseEntity<String> cancelOrder(@RequestBody RequestCancelOrderEntity userRequest, @Valid @RequestHeader HttpHeaders httpHeaders) {
+    public ResponseEntity<String> cancelOrder(@Valid @RequestBody RequestCancelOrderEntity userRequest,
+                                              @RequestHeader HttpHeaders httpHeaders) {
         log.debug(apiConstants.getLOG_CANCEL_ORDER_ENDPOINT());
         return userManageOrderService.cancelOrder(userRequest,httpHeaders);
     }
@@ -68,7 +70,8 @@ public class UserManageOrdersController {
      * @return ResponseEntity with status 200 OK upon successful deletion
      */
     @DeleteMapping(path = APIConstants.DELETE_USER_ORDER_ENDPOINT)
-    public ResponseEntity<String> deleteOrder(@RequestBody RequestCancelOrderEntity userRequest, @Valid @RequestHeader HttpHeaders httpHeaders) {
+    public ResponseEntity<String> deleteOrder(@Valid @RequestBody RequestCancelOrderEntity userRequest,
+                                              @RequestHeader HttpHeaders httpHeaders) {
         log.debug(apiConstants.getLOG_DELETE_ORDER_ENDPOINT());
         return userManageOrderService.deleteOrder(userRequest,httpHeaders);
     }

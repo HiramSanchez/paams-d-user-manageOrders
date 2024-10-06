@@ -4,7 +4,6 @@ import com.paa.dms.user.manage.orders.constants.APIConstants;
 import com.paa.dms.user.manage.orders.exception.custom.ForbiddenException;
 import com.paa.dms.user.manage.orders.exception.custom.NoDataFoundException;
 import com.paa.dms.user.manage.orders.model.*;
-import com.paa.dms.user.manage.orders.repository.MarketplaceProductsRepository;
 import com.paa.dms.user.manage.orders.repository.UsersOrdersRepository;
 import com.paa.dms.user.manage.orders.util.UtilTools;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +18,6 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class UserManageOrdersService {
-    @Autowired
-    private MarketplaceProductsRepository marketplaceProductsRepository;
     @Autowired
     private UsersOrdersRepository usersOrdersRepository;
     @Autowired
