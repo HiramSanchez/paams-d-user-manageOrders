@@ -29,6 +29,12 @@ The **paams-d-user-manageOrders** microservice is responsible for managing user 
 - **DELETE - /api/user/delete/order**  
   `delete-user-order`: Permanently deletes a user order from the database.
 
+## **API Documentation**
+This project includes API documentation using swagger. Access the documentation by running it and navigating to:
+```bash
+http://localhost:8080/swagger-ui/index.html
+```
+
 ## **Requirements**
 Before running this project, ensure the following dependencies are installed:
 
