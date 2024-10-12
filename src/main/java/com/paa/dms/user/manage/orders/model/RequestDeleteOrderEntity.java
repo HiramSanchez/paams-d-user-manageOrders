@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
-public class RequestCancelOrderEntity {
+public class RequestDeleteOrderEntity {
     /** Unique identifier for the order. */
     @NotBlank(message = " is mandatory")
     @Positive(message = " must be a positive number")

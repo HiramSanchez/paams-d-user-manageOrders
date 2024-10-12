@@ -1,6 +1,7 @@
 package com.paa.dms.user.manage.orders.service;
 
 import com.paa.dms.user.manage.orders.constants.APIConstants;
+import com.paa.dms.user.manage.orders.exception.custom.BadRequestException;
 import com.paa.dms.user.manage.orders.exception.custom.ForbiddenException;
 import com.paa.dms.user.manage.orders.exception.custom.NoDataFoundException;
 import com.paa.dms.user.manage.orders.model.*;
@@ -83,25 +84,43 @@ public class UserManageOrdersService {
     }
 
      /**
-     * Cancel Order Service
-     * Cancels an order if the user is authorized and the order status is "placed".
+     * Update Order Service
+     * Updates the state of an order if logic business is validated.
      * @param userRequest details of the order to cancel
      * @param httpHeaders HTTP headers to retrieve the user identifier (uid)
      * @return ResponseEntity confirming the order cancellation
      */
-    public ResponseEntity<String> cancelOrder(RequestCancelOrderEntity userRequest, HttpHeaders httpHeaders) {
+    public ResponseEntity<String> cancelOrder(RequestChangeOrderEntity userRequest, HttpHeaders httpHeaders) {
 
         String uid = httpHeaders.getFirst("uid").toString();
-        log.debug("REQUEST >>> " + uid + " requested to cancel order number #" + userRequest.getOrderID());
+        log.debug("REQUEST >>> " + uid + " requested to update order #" + userRequest.getOrderID());
+
         MongoOrdersEntity storedOrderData = findOrderByOrderId(userRequest.getOrderID()).orElseThrow(() -> new NoDataFoundException());
-        String status = storedOrderData.getOrderStatus().toString();
-        if ((status.equals(apiConstants.getSTATUS_ORDER_PLACED()))&&(uid.equals(storedOrderData.getUid()))) {
-            storedOrderData.setOrderStatus("canceled");
+        String requestedStatus = userRequest.getState();
+        String storedStatus = storedOrderData.getOrderStatus().toString();
+
+        switch(requestedStatus){
+            case "1": //Change to dispatched
+                    return validateStatus(storedOrderData, apiConstants.getSTATUS_DISPATCHED(),apiConstants.getSTATUS_ORDER_PLACED());
+            case "2": //Change to shipped
+                    return validateStatus(storedOrderData, apiConstants.getSTATUS_SHIPPED(), apiConstants.getSTATUS_DISPATCHED());
+            case "3": //Change to outForDelivery
+                    return validateStatus(storedOrderData, apiConstants.getSTATUS_OUT_FOR_DELIVERY(), apiConstants.getSTATUS_SHIPPED());
+            case "4": //Change to delivered
+                    return validateStatus(storedOrderData, apiConstants.getSTATUS_DELIVERED(), apiConstants.getSTATUS_OUT_FOR_DELIVERY());
+            case "5": //Change to canceled
+                    return validateStatus(storedOrderData, apiConstants.getSTATUS_CANCELED(), apiConstants.getSTATUS_ORDER_PLACED());
+            default:
+                throw new BadRequestException();
+        }
+    }
+
+    private ResponseEntity<String> validateStatus(MongoOrdersEntity storedOrderData, String newStatus, String validateState){
+        if (storedOrderData.getOrderStatus().equals(validateState)){
+            storedOrderData.setOrderStatus(newStatus);
             usersOrdersRepository.save(storedOrderData);
-            ResponseEntity response = ResponseEntity.ok("Order was canceled successfully");
-            log.debug("RESPONSE >>> " + response);
-            return response;
-        }else{
+            return ResponseEntity.ok("Order was updated to "+ newStatus +" successfully");
+        }else {
             throw new ForbiddenException();
         }
     }
@@ -113,20 +132,15 @@ public class UserManageOrdersService {
      * @param httpHeaders HTTP headers to retrieve the user identifier (uid)
      * @return ResponseEntity confirming the order deletion
      */
-    public ResponseEntity<String> deleteOrder(RequestCancelOrderEntity userRequest, HttpHeaders httpHeaders) {
+    public ResponseEntity<String> deleteOrder(RequestDeleteOrderEntity userRequest, HttpHeaders httpHeaders) {
 
         String uid = httpHeaders.getFirst("uid").toString();
         log.debug("REQUEST >>> " + uid + " requested to delete order number #" + userRequest.getOrderID());
-
         MongoOrdersEntity storedOrderData = findOrderByOrderId(userRequest.getOrderID()).orElseThrow(() -> new NoDataFoundException());
-        if (uid.equals(storedOrderData.getUid())) {
-            usersOrdersRepository.deleteById(storedOrderData.get_id().toString());
-            ResponseEntity response = ResponseEntity.ok("Order deleted successfully");
-            log.debug("RESPONSE >>> " + response);
-            return response;
-        }else{
-            throw new ForbiddenException();
-        }
+        usersOrdersRepository.deleteById(storedOrderData.get_id().toString());
+        ResponseEntity response = ResponseEntity.ok("Order deleted successfully");
+        log.debug("RESPONSE >>> " + response);
+        return response;
     }
 
     /**
