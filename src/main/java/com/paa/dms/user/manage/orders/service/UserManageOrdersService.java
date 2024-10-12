@@ -101,15 +101,16 @@ public class UserManageOrdersService {
 
         switch(requestedStatus){
             case "1": //Change to dispatched
-                    return validateStatus(storedOrderData, apiConstants.getSTATUS_DISPATCHED(),apiConstants.getSTATUS_ORDER_PLACED());
+                storedOrderData.setGuideNumber(utilTools.getGuideNumber(userRequest.getOrderID()));
+                return validateStatus(storedOrderData, apiConstants.getSTATUS_DISPATCHED(),apiConstants.getSTATUS_ORDER_PLACED());
             case "2": //Change to shipped
-                    return validateStatus(storedOrderData, apiConstants.getSTATUS_SHIPPED(), apiConstants.getSTATUS_DISPATCHED());
+                return validateStatus(storedOrderData, apiConstants.getSTATUS_SHIPPED(), apiConstants.getSTATUS_DISPATCHED());
             case "3": //Change to outForDelivery
-                    return validateStatus(storedOrderData, apiConstants.getSTATUS_OUT_FOR_DELIVERY(), apiConstants.getSTATUS_SHIPPED());
+                return validateStatus(storedOrderData, apiConstants.getSTATUS_OUT_FOR_DELIVERY(), apiConstants.getSTATUS_SHIPPED());
             case "4": //Change to delivered
-                    return validateStatus(storedOrderData, apiConstants.getSTATUS_DELIVERED(), apiConstants.getSTATUS_OUT_FOR_DELIVERY());
+                return validateStatus(storedOrderData, apiConstants.getSTATUS_DELIVERED(), apiConstants.getSTATUS_OUT_FOR_DELIVERY());
             case "5": //Change to canceled
-                    return validateStatus(storedOrderData, apiConstants.getSTATUS_CANCELED(), apiConstants.getSTATUS_ORDER_PLACED());
+                return validateStatus(storedOrderData, apiConstants.getSTATUS_CANCELED(), apiConstants.getSTATUS_ORDER_PLACED());
             default:
                 throw new BadRequestException();
         }
