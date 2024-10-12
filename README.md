@@ -7,12 +7,12 @@
 [![Maven](https://img.shields.io/badge/Maven-3.9.9-gold)](https://maven.apache.org/)
 
 ## **Description**
-The **paams-d-user-manageOrders** microservice is responsible for managing user orders. It provides a RESTful API that allows creating, retrieving, canceling, and deleting orders in the database. This service is scalable and designed to integrate easily into a microservices architecture.
+The **paams-d-user-manageOrders** microservice is responsible for managing user orders. It provides a RESTful API that allows creating, retrieving, updating, and deleting orders in the database. This service is scalable and designed to integrate easily into a microservices architecture.
 
 ## **Features**
 - **Order Creation**: Create new orders and initiate the delivery process.
 - **Order Retrieval**: Fetch order details from the database.
-- **Order Cancellation**: Cancel existing orders.
+- **Order Update**: Updates orders status.
 - **Order Deletion**: Permanently delete orders.
 
 ## **API Endpoints**
