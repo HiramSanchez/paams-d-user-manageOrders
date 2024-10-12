@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 @Component
 /**
- * Utility class providing helper methods for date formatting and order ID generation.
+ * Utility class providing helper methods and mocks.
  */
 public class UtilTools {
 
@@ -33,5 +33,17 @@ public class UtilTools {
         int randomSix = ThreadLocalRandom.current().nextInt(100000, 1000000);
         String orderId = dateCode + randomSix;
         return orderId;
+    }
+
+    /**
+     * Generates a guide number from a random number to mock an external provider's API
+     * The guide number is formed by a fifteen-digit random number.
+     * @return A string representing the guide number.
+     */
+    public String getGuideNumber(String orderId){
+        String orderCode = orderId.substring(8);
+        int randomNine = ThreadLocalRandom.current().nextInt(100000000, 1000000000);
+        String guideNumber = orderCode + randomNine;
+        return guideNumber;
     }
 }
