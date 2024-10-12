@@ -23,8 +23,8 @@ The **paams-d-user-manageOrders** microservice is responsible for managing user 
 - **GET - /api/user/retrieve/orders**  
   `retrieve-user-orders`: Retrieves user order data from the database.
   
-- **PUT - /api/user/cancel/order**  
-  `cancel-order-request`: Cancels a specific user order.
+- **PUT - /api/user/change/order**  
+  `change-order-request`: Changes the state of a specific order.
   
 - **DELETE - /api/user/delete/order**  
   `delete-user-order`: Permanently deletes a user order from the database.

@@ -26,8 +26,6 @@ public class APIConstants {
     private String LOG_DELETE_ORDER_ENDPOINT;
     @Value("${constants.api.uri.cancelOrderRequest.call}")
     private String LOG_CANCEL_ORDER_ENDPOINT;
-    @Value("${constants.api.uri.status.orderPlaced}")
-    private String STATUS_ORDER_PLACED;
 
     //Error resolver log messages
     @Value("${constants.api.uri.errors.msg.unexpected}")
@@ -36,6 +34,9 @@ public class APIConstants {
     private String EXCEPTION_MSG_NO_DATA_FOUND;
     @Value("${constants.api.uri.errors.msg.forbidden}")
     private String EXCEPTION_MSG_FORBIDDEN;
+    @Value("${constants.api.uri.errors.msg.badRequest}")
+    private String EXCEPTION_MSG_BAD_REQUEST;
+
 
     //Swagger Constants
     @Value("${service.api.version}")
@@ -48,6 +49,20 @@ public class APIConstants {
     private String DEV_WEB;
     @Value("${service.api.dev.email}")
     private String DEV_EMAIL;
+
+    //OrderStates
+    @Value("${constants.api.uri.status.orderPlaced}")
+    private String STATUS_ORDER_PLACED;
+    @Value("${constants.api.uri.status.dispatched}")
+    private String STATUS_DISPATCHED;
+    @Value("${constants.api.uri.status.shipped}")
+    private String STATUS_SHIPPED;
+    @Value("${constants.api.uri.status.outForDelivery}")
+    private String STATUS_OUT_FOR_DELIVERY;
+    @Value("${constants.api.uri.status.delivered}")
+    private String STATUS_DELIVERED;
+    @Value("${constants.api.uri.status.canceled}")
+    private String STATUS_CANCELED;
 
 
 

@@ -1,6 +1,7 @@
 package com.paa.dms.user.manage.orders.exception;
 
 import com.paa.dms.user.manage.orders.constants.APIConstants;
+import com.paa.dms.user.manage.orders.exception.custom.BadRequestException;
 import com.paa.dms.user.manage.orders.exception.custom.ForbiddenException;
 import com.paa.dms.user.manage.orders.exception.custom.NoDataFoundException;
 import lombok.Data;
@@ -91,5 +92,21 @@ public class GlobalExceptionHandler {
                 request.getDescription(false)
         );
         return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
+    }
+
+    /**
+     * Handles exceptions thrown when a Bad request is attempted.
+     *
+     * @param request the current request context
+     * @return ResponseEntity containing the error details and HTTP status 400 (Bad Request)
+     */
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<?> handleBadRequestException(WebRequest request) {
+        ErrorResponse errorDetails = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                apiConstants.getEXCEPTION_MSG_BAD_REQUEST(),
+                request.getDescription(false)
+        );
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 }
