@@ -103,7 +103,7 @@ public class UserManageOrdersController {
     public ResponseEntity<String> cancelOrder(@Valid @RequestBody RequestChangeOrderEntity userRequest,
                                               @RequestHeader HttpHeaders httpHeaders) {
         log.debug(apiConstants.getLOG_CANCEL_ORDER_ENDPOINT());
-        return userManageOrderService.cancelOrder(userRequest,httpHeaders);
+        return userManageOrderService.updateOrder(userRequest,httpHeaders);
     }
 
     /**
