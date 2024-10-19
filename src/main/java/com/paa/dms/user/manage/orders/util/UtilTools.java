@@ -1,15 +1,20 @@
 package com.paa.dms.user.manage.orders.util;
 
-import org.springframework.stereotype.Component;
 
+import org.springframework.stereotype.Component;
 import java.time.LocalDate;
+import java.security.SecureRandom;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.ThreadLocalRandom;
 @Component
 /**
  * Utility class providing helper methods and mocks.
  */
 public class UtilTools {
+    private final SecureRandom secureRandom;
+    // Constructor-based dependency injection for SecureRandom
+    public UtilTools(SecureRandom secureRandom) {
+        this.secureRandom = secureRandom;
+    }
 
     /**
      * Returns the current date formatted as "MM-dd-yyyy".
@@ -30,9 +35,8 @@ public class UtilTools {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
         String dateCode = currentDate.format(formatter);
-        int randomSix = ThreadLocalRandom.current().nextInt(100000, 1000000);
-        String orderId = dateCode + randomSix;
-        return orderId;
+        int randomSix = secureRandom.nextInt(900000) + 100000;
+        return dateCode + randomSix;
     }
 
     /**
@@ -42,8 +46,7 @@ public class UtilTools {
      */
     public String getGuideNumber(String orderId){
         String orderCode = orderId.substring(8);
-        int randomNine = ThreadLocalRandom.current().nextInt(100000000, 1000000000);
-        String guideNumber = orderCode + randomNine;
-        return guideNumber;
+        int randomNine = secureRandom.nextInt(900000000) + 100000000;
+        return orderCode + randomNine;
     }
 }

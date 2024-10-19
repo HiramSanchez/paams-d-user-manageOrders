@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
-@Data
 @ControllerAdvice
 /**
  * Global exception handler to manage exceptions thrown in the application.
