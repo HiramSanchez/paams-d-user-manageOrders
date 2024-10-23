@@ -4,20 +4,19 @@
  &emsp;
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.3-lightgreen)](https://spring.io/projects/spring-boot)
  &emsp;
-[![Maven](https://img.shields.io/badge/Maven-3.9.9-gold)](https://maven.apache.org/)
+[![Maven](https://img.shields.io/badge/Maven-3.9.9-gold)](https://maven.apache.org/)  
+
+## **Description**
+The **paams-d-user-manageOrders** microservice is responsible for managing user orders. It provides a RESTful API that allows creating, retrieving, updating, and deleting orders in the database. This service is scalable and designed to integrate easily into a microservices architecture.
 
 ## Table of Contents  
-- [Description](#description)  
 - [Features](#features)  
 - [Endpoints](#api-endpoints)  
 - [Documentation](#api-documentation)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Tests](#testing)
-- [Contact](#contact) 
-
-## **Description**
-The **paams-d-user-manageOrders** microservice is responsible for managing user orders. It provides a RESTful API that allows creating, retrieving, updating, and deleting orders in the database. This service is scalable and designed to integrate easily into a microservices architecture.
+- [Contact](#contact)
 
 ## **Features**
 - **Order Creation**: Create new orders and initiate the delivery process.
